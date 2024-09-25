@@ -12,7 +12,7 @@ app = FastAPI()
 
 
 @app.get("/cars/", response_model=List[CarResponse])
-def create_car(db: Session = Depends(get_db)):
+def get_all_cars(db: Session = Depends(get_db)):
     cars = db.query(Car).all()
     return cars
 

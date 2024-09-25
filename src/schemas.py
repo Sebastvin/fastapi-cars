@@ -1,11 +1,16 @@
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, field_validator, Field
+from datetime import date
 from typing import List
+
+
+CURRENT_YEAR: int = date.today().year
+MINIMAL_YEAR: int = 1980
 
 
 class CarBase(BaseModel):
     brand: str
     model: str
-    year: int
+    year: int = Field(..., ge=MINIMAL_YEAR, le=CURRENT_YEAR)
 
 
 class CarRatingBase(BaseModel):
@@ -29,13 +34,7 @@ class CarResponse(CarBase):
 
 
 class CarRatingCreate(BaseModel):
-    rating: int
-
-    @field_validator("rating")
-    def check_rating_range(cls, v):
-        if v < 1 or v > 5:
-            raise ValueError("Rating must be between 1 and 5")
-        return v
+    rating: int = Field(..., ge=1, le=5)
 
 
 class CarResponseWithAvg(BaseModel):
@@ -47,4 +46,4 @@ class CarResponseWithAvg(BaseModel):
     ratings: List[CarRatingBase]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
