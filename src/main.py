@@ -59,14 +59,15 @@ def get_top_ten_ratings_cars(db: Session = Depends(get_db)):
 
     result = []
     for car, avg_rating in top_cars:
-        car_dict = {
-            "id": car.id,
-            "brand": car.brand,
-            "model": car.model,
-            "year": car.year,
-            "average_rating": round(avg_rating, 2),
-            "ratings": [{"id": r.id, "rating": r.rating} for r in car.ratings],
-        }
-        result.append(car_dict)
+        if avg_rating:
+            car_dict = {
+                "id": car.id,
+                "brand": car.brand,
+                "model": car.model,
+                "year": car.year,
+                "average_rating": round(avg_rating, 2),
+                "ratings": [{"id": r.id, "rating": r.rating} for r in car.ratings],
+            }
+            result.append(car_dict)
 
     return result
