@@ -17,7 +17,7 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-### 4. Start server
+### 4. Move to src folder and start server
 ```python 
 uvicorn main:app --reload
 ```
