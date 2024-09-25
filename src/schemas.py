@@ -12,6 +12,24 @@ class CarBase(BaseModel):
     model: str
     year: int = Field(..., ge=MINIMAL_YEAR, le=CURRENT_YEAR)
 
+    @field_validator("brand")
+    def check_brand(cls, v):
+        v = v.strip()
+        if len(v) == 0:
+            raise ValueError("Brand cannot be empty")
+        if len(v) > 100:
+            raise ValueError("Brand name is too long")
+        return v
+
+    @field_validator("model")
+    def check_model(cls, v):
+        v = v.strip()
+        if len(v) == 0:
+            raise ValueError("Model cannot be empty")
+        if len(v) > 100:
+            raise ValueError("Model name is too long")
+        return v
+
 
 class CarRatingBase(BaseModel):
     id: int
