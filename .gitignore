@@ -20,6 +20,7 @@ site_build
 venv
 docs.zip
 archive.zip
+*.db
 
 # vim temporary files
 *~
@@ -31,3 +32,4 @@ archive.zip
 
 # macOS
 .DS_Store
+
