@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 from typing import List
 
 
@@ -28,12 +28,14 @@ class CarResponse(CarBase):
         from_attributes = True
 
 
-class CarRatingBase(BaseModel):
+class CarRatingCreate(BaseModel):
     rating: int
 
-
-class CarRatingCreate(CarRatingBase):
-    pass
+    @field_validator("rating")
+    def check_rating_range(cls, v):
+        if v < 1 or v > 5:
+            raise ValueError("Rating must be between 1 and 5")
+        return v
 
 
 class CarResponseWithAvg(BaseModel):
