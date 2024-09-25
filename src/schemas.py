@@ -13,7 +13,7 @@ class CarRatingBase(BaseModel):
     rating: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class CarCreate(CarBase):
@@ -23,6 +23,26 @@ class CarCreate(CarBase):
 class CarResponse(CarBase):
     id: int
     ratings: List[CarRatingBase] = []
+
+    class Config:
+        from_attributes = True
+
+
+class CarRatingBase(BaseModel):
+    rating: int
+
+
+class CarRatingCreate(CarRatingBase):
+    pass
+
+
+class CarResponseWithAvg(BaseModel):
+    id: int
+    brand: str
+    model: str
+    year: int
+    average_rating: float
+    ratings: List[CarRatingBase]
 
     class Config:
         orm_mode = True
